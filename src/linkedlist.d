@@ -1,5 +1,7 @@
 module linkedlist;
 
+
+
 struct LinkedList(T)
 {
 
@@ -74,6 +76,13 @@ private:
         }
     }
 
+    void insertFirst(T)(T newNode){
+        Node* tmp = firstNode;
+        Node* n = new Node(newNode);
+        n.next = tmp;
+        firstNode = n;
+    }
+
     void insertAfter(T)(T newNode, size_t index)
     {
         Node* tmp = firstNode;
@@ -134,6 +143,15 @@ private:
         }
     }
 
+    T[] toArray(){
+        T[] returnArray;
+        Node* tmp = firstNode;
+        while(tmp){
+            returnArray ~= tmp.data;
+            tmp = tmp.next;
+        }
+        return returnArray;
+    }
     string toString()
     {
         import std.conv;
