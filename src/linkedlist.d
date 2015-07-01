@@ -85,7 +85,10 @@ private:
         Node* n1 = tmp.next;
         Node* n = new Node(newNode);
         tmp.next = n;
-        n.next = n1;
+        if(n1 == lastNode)
+            lastNode = n;
+        else
+            n.next = n1;
     }
 
     T popFront(){
@@ -99,6 +102,7 @@ private:
     void merge(LinkedList lst2){
         Node* n1st = lst2.getFirstNode();
         lastNode.next = n1st;
+        lastNode = lst2.lastNode;
         _count = _count + lst2.length;
     }
 
@@ -108,6 +112,26 @@ private:
 
     T getLast(){
         return lastNode.data;
+    }
+
+    bool contains(T node){
+        if(_count == 0){
+            return false;
+        }
+        else{
+            int i = 0;
+            Node* tmp = firstNode;
+            while(i < _count){
+
+                if(tmp.data == node ){
+                    return true;
+                }
+                tmp = tmp.next;
+                i++;
+
+            }
+            return false; 
+        }
     }
 
     string toString()
