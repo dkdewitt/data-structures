@@ -4,7 +4,6 @@ struct HashMap(K, V){
 
     alias Nodes = Node!(K,V);
     alias Item = Node!(K,V);
-    //auto n1 = Node!(K,V)();
     LinkedList!Nodes buckets[] ;
 
     this(size_t bucketCount)
@@ -19,7 +18,6 @@ struct HashMap(K, V){
             buckets ~= list;
         }
     }
-
 
 
     size_t hashToIndex(size_t hash) const pure nothrow @safe @nogc
@@ -37,10 +35,6 @@ struct HashMap(K, V){
     }
 
 
-
-    /**
-     * Returns: a GC-allocated array filled with the keys contained in this map.
-     */
     K[] keys()  @property
 
     {
@@ -90,9 +84,6 @@ struct HashMap(K, V){
     }
 
 
-    /**
-     * Supports $(B aa[key]) syntax.
-     */
     V opIndex(K key) 
     {
         import std.algorithm : find;
@@ -102,14 +93,17 @@ struct HashMap(K, V){
             throw new Exception("'" ~ text(key) ~ "' not found in HashMap");
         size_t hash = generateHash(key);
         size_t index = hashToIndex(hash);
+        writeln(hash);
+        writeln(index);
         foreach (r; buckets[index].toArray())
         {
-            static if (storeHash)
-            {
+            writeln(r.key);
+            writeln(key);
+
                 if (r.generateHash() == hash && r.key == key)
                     return r.value;
-            }
-            else
+            
+                else
             {
                 if (r.key == key)
                     return r.value;
@@ -156,11 +150,10 @@ void main() {
     t1.insert("1234", "12342");
     t1.insert("Dwwq1234", "Davi22d");
     t1.insert("David", "Davi2233d");
-t1.insert("Test", "Teswwwt");
+    t1.insert("Test", "Teswwwt");
 
     writeln(t1);
-    writeln(t1["1234"]);
-    //auto n1 = Node!(int,int)(233,2234);
-    //writeln(n1.generateHash());
+    writeln(t1["Test"]);
+
 }
 
