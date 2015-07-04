@@ -100,6 +100,11 @@ struct HashMap(K, V){
         throw new Exception("'" ~ text(key) ~ "' not found in HashMap");
     }
 
+    void opIndexAssign(V value, K key)
+    {
+        insert(key, value);
+    }
+
 enum bool storeHash = !isBasicType!K;
 
 private:
@@ -138,9 +143,9 @@ void main() {
     t1.insert("Dwwq1234", "Davi22d");
     t1.insert("David", "Davi2233d");
     t1.insert("Test", "Teswwwt");
-
+    t1["Roger"] = "Smith";
     writeln(t1);
-    writeln(t1["Tes3t"]);
+    writeln(t1["Test"]);
 
 }
 
