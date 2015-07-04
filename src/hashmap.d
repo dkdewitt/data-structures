@@ -105,7 +105,7 @@ struct HashMap(K, V){
         insert(key, value);
     }
 
-enum bool storeHash = !isBasicType!K;
+
 
 private:
     import std.traits : isBasicType;
@@ -118,7 +118,7 @@ private:
 
     hash_t generateHash() @trusted
 {
-    import std.functional : unaryFun;
+    
     hash_t h = typeid(K).getHash(&value);
     //writeln(h);
     h ^= (h >>> 20) ^ (h >>> 12);
@@ -129,7 +129,7 @@ private:
 
     hash_t generateHash(T)(T value) @trusted
 {
-    import std.functional : unaryFun;
+    
     hash_t h = typeid(T).getHash(&value);
     h ^= (h >>> 20) ^ (h >>> 12);
     return h ^ (h >>> 7) ^ (h >>> 4);

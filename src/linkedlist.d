@@ -78,7 +78,7 @@ private:
     void insert(T)(T newNode)
     {
         _count += 1;
-        writeln("Inserting");
+        
         if(firstNode is null) {
             firstNode = new Node(newNode);
             lastNode = firstNode;
