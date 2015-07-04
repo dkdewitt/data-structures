@@ -52,29 +52,22 @@ struct HashMap(K, V){
         auto item = Node!(K,V)(key,value);
         hash_t hash = item.generateHash();
         size_t index = hashToIndex(hash);
-        writeln(index);
         //Check this
         foreach(ref bucketItem; buckets[index].toArray ){
-            writeln("DDSJJ");
             if (bucketItem.generateHash() == hash && bucketItem.key == key)
                 {
-                    writeln("JJJ");
                     bucketItem.value = value;
                     return;
                 }        
             
             else if (bucketItem.key == key)
                 {
-                    writeln(item.key);
-                    writeln(key);
-                    writeln("key");
                     item.value = value;
                     return;
                 }
 
             else{
                 auto node = Node!(K,V)(key,value);
-                writeln("node");
                 buckets[index].insert(node);
                 return;
             }
@@ -93,13 +86,8 @@ struct HashMap(K, V){
             throw new Exception("'" ~ text(key) ~ "' not found in HashMap");
         size_t hash = generateHash(key);
         size_t index = hashToIndex(hash);
-        writeln(hash);
-        writeln(index);
         foreach (r; buckets[index].toArray())
         {
-            writeln(r.key);
-            writeln(key);
-
                 if (r.generateHash() == hash && r.key == key)
                     return r.value;
             
@@ -138,7 +126,6 @@ private:
 {
     import std.functional : unaryFun;
     hash_t h = typeid(T).getHash(&value);
-    //writeln(h);
     h ^= (h >>> 20) ^ (h >>> 12);
     return h ^ (h >>> 7) ^ (h >>> 4);
 }
@@ -153,7 +140,7 @@ void main() {
     t1.insert("Test", "Teswwwt");
 
     writeln(t1);
-    writeln(t1["Test"]);
+    writeln(t1["Tes3t"]);
 
 }
 
