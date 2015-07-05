@@ -20,7 +20,7 @@ struct HashMap(K, V){
     }
 
 
-    size_t hashToIndex(size_t hash) const pure nothrow @safe @nogc
+    size_t hashToIndex(size_t hash) const 
     in
     {
         assert (buckets.length > 0);
@@ -50,9 +50,10 @@ struct HashMap(K, V){
 
     void insert(K key,V value){
         auto item = Node!(K,V)(key,value);
-        hash_t hash = item.generateHash();
+        hash_t hash = generateHash(key);
         size_t index = hashToIndex(hash);
         //Check this
+
         foreach(ref bucketItem; buckets[index].toArray ){
             if (bucketItem.generateHash() == hash && bucketItem.key == key)
                 {
@@ -106,6 +107,35 @@ struct HashMap(K, V){
     }
 
 
+    /**
+    * Check is HashMap contains specific Key
+    */
+    bool containsKey(K key){
+        size_t hash = generateHash(key);
+        size_t index = hashToIndex(hash);
+        if(buckets.length == 0){
+            throw new Exception("'" ~ key ~ "' not found in HashMap" );
+            }
+
+        foreach(r; buckets[index].toArray){
+            
+            if(r.key == key)
+                return true;
+        }
+        
+        return false;
+    }
+
+string toString(){
+    string s;
+    foreach(bucket; buckets){
+        foreach(r; bucket.toArray){
+            s~= "Key: " ~ r.key ~ " Value: " ~ r.value ~ " "  ;
+        } //s~= "\n";
+    }
+    return s;
+}
+
 
 private:
     import std.traits : isBasicType;
@@ -114,38 +144,32 @@ private:
         V value;
      
         hash_t hash;
-        
-
-    hash_t generateHash() @trusted
-{
-    
-    hash_t h = typeid(K).getHash(&value);
-    //writeln(h);
-    h ^= (h >>> 20) ^ (h >>> 12);
-    return h ^ (h >>> 7) ^ (h >>> 4);
-}
-}
+        }
 }
 
-    hash_t generateHash(T)(T value) @trusted
+hash_t generateHash(T)(T value)
 {
     
-    hash_t h = typeid(T).getHash(&value);
-    h ^= (h >>> 20) ^ (h >>> 12);
-    return h ^ (h >>> 7) ^ (h >>> 4);
+        hash_t h = typeid(T).getHash(&value);
+        h ^= (h >>> 20) ^ (h >>> 12);
+        return h ^ (h >>> 7) ^ (h >>> 4);
 }
 
 void main() {
-    auto t1 = HashMap!(string, string)(4);
+    auto t1 = HashMap!(string, string)(16);
 
     t1.insert("Test", "Test");
     t1.insert("1234", "12342");
     t1.insert("Dwwq1234", "Davi22d");
-    t1.insert("David", "Davi2233d");
-    t1.insert("Test", "Teswwwt");
+    //t1.insert("David", "Davi2233d");
+    //t1.insert("Test", "Teswwwt");
+    writeln("Roger");
     t1["Roger"] = "Smith";
-    writeln(t1);
+    //writeln(t1);
     writeln(t1["Test"]);
+    writeln(t1.containsKey("Dwwq123"));
+    writeln(t1);
+
 
 }
 
