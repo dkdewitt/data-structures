@@ -6,7 +6,7 @@ struct HashMap(K, V){
     alias Item = Node!(K,V);
     LinkedList!Nodes buckets[] ;
 
-    this(size_t bucketCount)
+    this(size_t bucketCount = 16)
     in
     {
         assert ((bucketCount & (bucketCount - 1)) == 0, "bucketCount must be a power of two");
@@ -77,6 +77,9 @@ struct HashMap(K, V){
             buckets[index].insert(node);
     }
 
+    V get(K key){
+        return this[key];
+    }
 
     V opIndex(K key) 
     {
@@ -169,6 +172,8 @@ void main() {
     writeln(t1["Test"]);
     writeln(t1.containsKey("Dwwq123"));
     writeln(t1);
+
+    writeln(t1.get("1234"));
 
 
 }
