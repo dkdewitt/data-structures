@@ -175,7 +175,7 @@ private:
             //write(temp.data);
             if (temp.next)
                 s ~= ", ";
-                //write(", ");
+
             temp = temp.next;
             
 
@@ -183,5 +183,58 @@ private:
 
         return s;
     }
+
+    Range opSlice()
+    {
+        if (this._count == 0)
+            return Range(null);
+        else
+            return Range(firstNode);
+    }
+
+    /**
+    * Defines the linkedlist range
+    */
+    struct Range
+    {
+        private Node*  _head;
+
+        private this(Node* n) 
+        { 
+            _head = n; 
+        }
+
+        // Range empty 
+        @property bool empty() const { return false; }
+
+        /// ditto
+        @property ref T front()
+        {
+            assert(!empty, "LinkedList Range is empty");
+            return _head.data;
+        }
+
+        // Range pop front
+        void popFront()
+        {
+            assert(!empty, "LinkedList Range is empty");
+            _head = _head.next;
+        }
+
+        /// Forward range primitive.
+        @property Range save() { return this; }
+
+        T moveFront()
+        {
+            import std.algorithm : move;
+
+            assert(!empty, "LinkedList Range is empty");
+            return move(_head.data);
+        }
+
+
+    }
+
+
 
 }
