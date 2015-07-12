@@ -1,20 +1,6 @@
 module linkedlist;
 import std.stdio;
 
-/*
-void main() {
-    LinkedList!int buckets[] ;
-    foreach(val; 0..50){
-        buckets ~= LinkedList!int(val);
-    }
-    auto b = buckets[5];
-    foreach(bucket; b.toArray){
-        writeln(bucket);
-    }
-    //writeln(buckets[1]);
-
-}
-*/
 struct LinkedList(T)
 {
 
@@ -207,14 +193,14 @@ private:
         // Range empty 
         @property bool empty() const { return false; }
 
-        /// ditto
+        //Get Head
         @property ref T front()
         {
             assert(!empty, "LinkedList Range is empty");
             return _head.data;
         }
 
-        // Range pop front
+        // Range Pop Front
         void popFront()
         {
             assert(!empty, "LinkedList Range is empty");

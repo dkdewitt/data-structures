@@ -133,7 +133,7 @@ string toString(){
     string s;
     foreach(bucket; buckets){
         foreach(r; bucket.toArray){
-            s~= "Key: " ~ r.key ~ " Value: " ~ r.value ~ " "  ;
+            s~= "Key: " ~ r.key ~ ", Value: " ~ r.value ~ " \n"  ;
         } //s~= "\n";
     }
     return s;
@@ -159,23 +159,15 @@ hash_t generateHash(T)(T value)
 }
 
 void main() {
-    auto t1 = HashMap!(string, string)(16);
+    auto h1 = HashMap!(string, string)(16);
+    h1["Apple"] = "Fruit";
+    h1["Carrot"] = "Vegetable";
 
-    t1.insert("Test", "Test");
-    t1.insert("1234", "12342");
-    t1.insert("Dwwq1234", "Davi22d");
-    //t1.insert("David", "Davi2233d");
-    //t1.insert("Test", "Teswwwt");
-    writeln("Roger");
-    t1["Roger"] = "Smith";
-    //writeln(t1);
-    writeln(t1["Test"]);
-    writeln(t1.containsKey("Dwwq123"));
-    writeln(t1);
+    writeln(h1);
+    writeln(h1["Carrot"]);
 
-    writeln(t1.get("1234"));
-
-
+    writeln(h1.keys);
+    //writeln(h1.values);
 
 
 }
